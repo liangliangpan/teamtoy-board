@@ -82,6 +82,25 @@
 			?>	
 		</div>
 		<div class="add_card">追加TODO：<a class="side_link" href="javascript:todo_batch_add(<?php echo $id?>,<?php echo $list['id']?>,'<?php echo $board['visible']?>');">创建</a> 或 <a class="side_link" href="javascript:show_float_box('导入已有TODO','?c=plugin&a=board_todo_import&board_id=<?php echo $id?>&list_id=<?php echo $list['id']?>');">导入</a></div>
+
+		<?php if($list['work_hours_enable'] > 0):?>
+		<div id="workhours_board_container" bid="<?php echo $id?>" lid="<?php echo $list['id']?>">
+			  <div ><span class='hours_txt_label'>估计时间: </span>
+			    <a class="plan_num"  id="board_plan_hours"><?=$list['total_plan_hours']?></a>h
+			    &nbsp;&nbsp;<span class='hours_txt_label'>剩余: </span>
+			    <a class="plan_num"  id="board_left_hours"><?=$list['total_left_hours']?></a>h
+			  </div>
+			  <div id='board_barchart'>
+			    <div class="progress">
+			      <div class="bar" style="width: <?=$list['workhours_percent']?>%;" id="board_workhours_progress"></div>
+			    </div>
+			    <span id="board_percent_num"><?=$list['workhours_percent']?>%</span>
+			  </div>
+		</div>
+		<?php
+				endif;
+		?>	
+
 	</div><!--/list-->
 	<?php 
 	endforeach;

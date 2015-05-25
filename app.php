@@ -271,6 +271,24 @@ function board_data(){
 		foreach($list as $arr){
 			$todos=trim($arr['todos'],',');
 			$arr['todo_lists']=empty($todos)?array():get_data("select distinct id,content,status from todo left join todo_user on todo_user.tid=todo.id where id in({$todos}) order by find_in_set(id,'{$todos}')");
+
+			//get work hours
+			$work_hours_enable = get_line("select * from plugin where folder_name='work_hours' and `on`=1");
+			if(!empty($work_hours_enable)){
+				$tmp =empty($todos)?null:get_line("select sum(plan_hours) as plan_hours, sum(left_hours) as left_hours from work_hours where tid in({$todos})");
+				$arr['total_plan_hours'] = empty($tmp)?0:$tmp['plan_hours'];
+				$arr['total_left_hours'] = empty($tmp)?0:$tmp['left_hours'];
+				if((int)$arr['total_plan_hours'] > 0){
+					$arr['workhours_percent'] = (int)(100*(1 - (float)$arr['total_left_hours']/(float)$arr['total_plan_hours']));
+				}else{
+					$arr['workhours_percent'] = 0;
+				}
+				$arr['work_hours_enable'] = 1;				
+			}else{
+				$arr['work_hours_enable'] = 0;
+			}
+
+			
 			$result['lists'][]=$arr;
 		}
 	}
