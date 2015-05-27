@@ -270,7 +270,10 @@ function board_data(){
 		//读取list下的TODO
 		foreach($list as $arr){
 			$todos=trim($arr['todos'],',');
-			$arr['todo_lists']=empty($todos)?array():get_data("select distinct id,content,status from todo left join todo_user on todo_user.tid=todo.id where id in({$todos}) order by find_in_set(id,'{$todos}')");
+			$arr['todo_lists']=empty($todos)?array():get_data("select distinct todo.id as id,content,status, work_hours.plan_hours as plan_hours from todo "
+				." left join todo_user on todo_user.tid=todo.id "
+				." left join work_hours on todo.id=work_hours.tid"
+				." where todo.id in({$todos}) order by find_in_set(todo.id,'{$todos}')");
 
 			//get work hours
 			$work_hours_enable = get_line("select * from plugin where folder_name='work_hours' and `on`=1");

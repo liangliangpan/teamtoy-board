@@ -249,3 +249,12 @@ function board_todo_import(board_id,list_id){
 	return false;
 }
 
+function toggle_show_done_todos(board_id, list_id){
+	if($('.list[lid="'+list_id+'"] .card_done').css('display') != "none"){
+		$('.list[lid="'+list_id+'"] .card_done').css("display","none");
+	}
+	else{
+		$('.list[lid="'+list_id+'"] .card_done').css("display","block");
+	}
+}
+

@@ -44,7 +44,7 @@
 	 ?>
 	<div lid="<?php echo $list['id']?>" todos="<?php echo $list['todos']?>" class="list list_drag span">
 		<div class="list_head clearfix" id="list_head_<?php echo $list['id']?>">
-			<h5 title="单击标题进行编辑" onclick="list_edit(<?php echo $list['id']?>)" id="list_title_<?php echo $list['id']?>" class="pull-left"><?php echo $list['name']?></h5><a title="删除" onclick="return confirm('是否确认删除列表')" class="list_remove" href="?c=plugin&a=board_list_delete&id=<?php echo $list['id']?>"><i class="icon-remove pull-right"></i></a>
+			<h5 title="单击标题进行编辑" onclick="list_edit(<?php echo $list['id']?>)" id="list_title_<?php echo $list['id']?>" class="pull-left"><?php echo $list['name']?>&nbsp;[<span id="todo_num"><?php echo count($list['todo_lists']) ?></span>]</h5><a title="删除" onclick="return confirm('是否确认删除列表')" class="list_remove" href="?c=plugin&a=board_list_delete&id=<?php echo $list['id']?>"><i class="icon-remove pull-right"></i></a>
 		</div>
 		<div class="list_edit_head" id="list_edit_head_<?php echo $list['id']?>">
 			<form id="todo_edit_form" method="post" action="?c=plugin&a=board_list_update" class="form-inline">
@@ -75,13 +75,26 @@
 				
 				?>" onclick="board_show_todo_detail_center(<?php echo $card['id']?>);" tid="<?php echo $card['id']?>">
 				<i class="todo_status icon-chevron-down" title="切换TODO状态"></i> 
-				<span><?php echo $card['content']?></span>
+				<span><?php echo "#".$card['id'].":&nbsp;&nbsp;".$card['content'];?></span>
+
+				<?php if($list['work_hours_enable'] > 0):?>
+					<div class='todo_plan_hours_bar' style="width:<?php echo 100*($card['plan_hours']/(float)20)?>%;
+						<?php 
+					if(3==$card['status'] || null==$card['status']) 
+							echo ' background-color: grey;';		
+					?>"></div>
+				<?php endif;?>
+			
 			</div>
 			<?php
 				endforeach;
 			?>	
 		</div>
-		<div class="add_card">追加TODO：<a class="side_link" href="javascript:todo_batch_add(<?php echo $id?>,<?php echo $list['id']?>,'<?php echo $board['visible']?>');">创建</a> 或 <a class="side_link" href="javascript:show_float_box('导入已有TODO','?c=plugin&a=board_todo_import&board_id=<?php echo $id?>&list_id=<?php echo $list['id']?>');">导入</a></div>
+		<div class="add_card">
+			追加TODO：<a class="side_link" href="javascript:todo_batch_add(<?php echo $id?>,<?php echo $list['id']?>,'<?php echo $board['visible']?>');">创建</a> 或 <a class="side_link" href="javascript:show_float_box('导入已有TODO','?c=plugin&a=board_todo_import&board_id=<?php echo $id?>&list_id=<?php echo $list['id']?>');">导入</a>
+
+			<a style="display: inline;" class="board_top_ctrl" title="显示/隐藏已经完成的todos" href="javascript:toggle_show_done_todos(<?php echo $id?>, <?php echo $list['id']?>);">&nbsp;<i class="icon-edit"></i></a>
+		</div>
 
 		<?php if($list['work_hours_enable'] > 0):?>
 		<div id="workhours_board_container" bid="<?php echo $id?>" lid="<?php echo $list['id']?>">
