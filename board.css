@@ -64,6 +64,8 @@
 
 .card_list .todo_plan_hours_bar
 {
-  background-color: green;
+  background-color: grey;
   height: 5px;
+  position: relative;
 }
+#board_top_ctrl_toggle_display{font-size:14px!important;}

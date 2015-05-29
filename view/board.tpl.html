@@ -79,10 +79,9 @@
 
 				<?php if($list['work_hours_enable'] > 0):?>
 					<div class='todo_plan_hours_bar' style="width:<?php echo 100*($card['plan_hours']/(float)20)?>%;
-						<?php 
-					if(3==$card['status'] || null==$card['status']) 
-							echo ' background-color: grey;';		
-					?>"></div>
+						background-color: grey;"></div>
+					<div class='todo_plan_hours_bar' id="progress_bar" style="width:<?php echo 100*((float)($card['plan_hours'] - $card['left_hours'])/(float)20)?>%;
+						background-color: green; top: -5px;z-index: 10;"></div>
 				<?php endif;?>
 			
 			</div>
@@ -93,7 +92,7 @@
 		<div class="add_card">
 			追加TODO：<a class="side_link" href="javascript:todo_batch_add(<?php echo $id?>,<?php echo $list['id']?>,'<?php echo $board['visible']?>');">创建</a> 或 <a class="side_link" href="javascript:show_float_box('导入已有TODO','?c=plugin&a=board_todo_import&board_id=<?php echo $id?>&list_id=<?php echo $list['id']?>');">导入</a>
 
-			<a style="display: inline;" class="board_top_ctrl" title="显示/隐藏已经完成的todos" href="javascript:toggle_show_done_todos(<?php echo $id?>, <?php echo $list['id']?>);">&nbsp;<i class="icon-edit"></i></a>
+			<a style="display: inline; color:rgb(148, 148, 148);" id="board_top_ctrl_toggle_display" title="隐藏已经完成的todos" href="javascript:toggle_show_done_todos(<?php echo $id?>, <?php echo $list['id']?>);">&nbsp;<i class="icon-eye-open"></i></a>
 		</div>
 
 		<?php if($list['work_hours_enable'] > 0):?>

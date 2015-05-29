@@ -270,7 +270,7 @@ function board_data(){
 		//读取list下的TODO
 		foreach($list as $arr){
 			$todos=trim($arr['todos'],',');
-			$arr['todo_lists']=empty($todos)?array():get_data("select distinct todo.id as id,content,status, work_hours.plan_hours as plan_hours from todo "
+			$arr['todo_lists']=empty($todos)?array():get_data("select distinct todo.id as id,content,status, work_hours.plan_hours as plan_hours,work_hours.left_hours as left_hours from todo "
 				." left join todo_user on todo_user.tid=todo.id "
 				." left join work_hours on todo.id=work_hours.tid"
 				." where todo.id in({$todos}) order by find_in_set(todo.id,'{$todos}')");

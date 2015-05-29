@@ -252,9 +252,13 @@ function board_todo_import(board_id,list_id){
 function toggle_show_done_todos(board_id, list_id){
 	if($('.list[lid="'+list_id+'"] .card_done').css('display') != "none"){
 		$('.list[lid="'+list_id+'"] .card_done').css("display","none");
+		$('.list[lid="'+list_id+'"] #board_top_ctrl_toggle_display').attr("title","显示已经完成的todos").css("color","#0194C4");
+		
 	}
 	else{
 		$('.list[lid="'+list_id+'"] .card_done').css("display","block");
+		$('.list[lid="'+list_id+'"] #board_top_ctrl_toggle_display').attr("title","隐藏完成的todos").css("color","rgb(148, 148, 148)");
+		
 	}
 }
 
